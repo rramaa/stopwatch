@@ -17,7 +17,7 @@
 <body>
 
 <div id="main">
-	<table id="clock1" border="0">
+	<table id="clock0" class="clocks" border="0">
 		<tr>
 			<td class="time" id="hour">00</td>
 			<td class="colon">:</td>
@@ -30,7 +30,7 @@
 			<td></td>
 			<td><button onclick="stop(this)">Stop</button></td>
 			<td></td>
-			<td><button onclick="reset(this)" ondblclick="masterreset()">Reset</button></td>
+			<td><button onclick="reset(this)" ondblclick="masterreset(this)">Reset</button></td>
 		</tr>
 		<tr>
 			<td class="itime"><input id="ihour" value="0"></td>
@@ -40,21 +40,46 @@
 			<td class="itime"><input id="isecond" value="0"></td>
 		</tr>
 	</table>
+
+	<table id="clock1" class="clocks" border="0">
+		<tr>
+			<td class="time" id="hour">00</td>
+			<td class="colon">:</td>
+			<td class="time" id="minute">00</td>
+			<td class="colon">:</td>
+			<td class="time" id="second">00</td>
+		</tr>
+		<tr>
+			<td><button onclick="start(this)">Start</button></td>
+			<td></td>
+			<td><button onclick="stop(this)">Stop</button></td>
+			<td></td>
+			<td><button onclick="reset(this)" ondblclick="masterreset(this)">Reset</button></td>
+		</tr>
+		<tr>
+			<td class="itime"><input id="ihour" value="0"></td>
+			<td class="colon">:</td>
+			<td class="itime"><input id="iminute" value="0"></td>
+			<td class="colon">:</td>
+			<td class="itime"><input id="isecond" value="0"></td>
+		</tr>
+
 </div>
 <script type="text/javascript">
-	var interval;
-	var started=false;
+	var length=document.getElementsByTagName('table').length;
+	var interval=new Array(length);
+	var started=new Array(length);
+	for (var i = 0; i < length; i++) {
+		started[i]=false;
+	};
+	console.log(length);
+	
 	//function to reset the stopwatch to the given time
 	function reset(element){
 		var parent=element.parentNode.parentNode.parentNode.childNodes;
-		//id=parent.getAttribute('id');
-		//console.log(parent.childNodes[1].childNodes[0].childNodes);
-		//console.log(parent);
 		time=parent[0];
 		buttons=parent[2];
 		inputs=parent[4];
-
-		//console.log(inputs.childNodes[1].childNodes[0].value);
 		var h=parseInt(inputs.childNodes[1].childNodes[0].value);
 		var m=parseInt(inputs.childNodes[5].childNodes[0].value);
 		var s=parseInt(inputs.childNodes[9].childNodes[0].value);
@@ -96,20 +121,21 @@
 	//function to start the stopwatch
 	function start(element)
 	{
-		if(!started)
+		var i=parseInt(element.parentNode.parentNode.parentNode.parentNode.getAttribute('id').substring(5));
+		if(!started[i])
 		{
 			var parent=element.parentNode.parentNode.parentNode.childNodes;
 			time=parent[0];
 			updateTime(time);
-			interval=setInterval(updateTime,1000);
-			started=true;
+			interval[i]=setInterval(updateTime,1000);
+			console.log(i+" started");
+			started[i]=true;
 		}
 	}
 
 	//function to update the time
 	function updateTime(element)
 	{
-		console.log(element);
 		var h=parseInt(time.childNodes[1].innerHTML);
 		var m=parseInt(time.childNodes[5].innerHTML);
 		var s=parseInt(time.childNodes[9].innerHTML)+1;
@@ -138,22 +164,29 @@
 
 	//function to stop the stopwatch
 	function stop(element){
-		clearInterval(interval);
+		var i=parseInt(element.parentNode.parentNode.parentNode.parentNode.getAttribute('id').substring(5));
+		clearInterval(interval[i]);
+		console.log(i+"stopped");
 		var parent=element.parentNode.parentNode.parentNode.childNodes;
 		time=parent[0];
 		buttons=parent[2];
 		inputs=parent[4];
-
-
-		
 		inputs.childNodes[1].childNodes[0].value=time.childNodes[1].innerHTML;
 		inputs.childNodes[5].childNodes[0].value=time.childNodes[5].innerHTML;
 		inputs.childNodes[9].childNodes[0].value=time.childNodes[9].innerHTML;
-		started=false;
+		started[i]=false;
 	}
 
-	function masterreset () {
-		location.reload();
+	function masterreset (element) {
+		stop(element);
+		var parent=element.parentNode.parentNode.parentNode.childNodes;
+		time=parent[0];
+		buttons=parent[2];
+		inputs=parent[4];
+		for (var i = 1; i < 10; i+=4 ){
+			time.childNodes[i].innerHTML="00";
+			inputs.childNodes[i].childNodes[0].value=0;
+		}
 	}
 </script>
 </body>
