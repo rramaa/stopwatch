@@ -30,7 +30,7 @@
 			<td></td>
 			<td><button onclick="stop()">Stop</button></td>
 			<td></td>
-			<td><button onclick="reset()">Reset</button></td>
+			<td><button onclick="reset()" ondblclick="masterreset()">Reset</button></td>
 		</tr>
 		<tr>
 			<td class="itime"><input id="ihour" value="0"></td>
@@ -136,6 +136,10 @@
 		m.value=mm.innerHTML;
 		s.value=ss.innerHTML;
 		started=false;
+	}
+
+	function masterreset () {
+		location.reload();
 	}
 </script>
 </body>
