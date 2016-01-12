@@ -69,10 +69,10 @@
 	var length=document.getElementsByTagName('table').length;
 	var interval=new Array(length);
 	var started=new Array(length);
+	var tosend=new Array(length);
 	for (var i = 0; i < length; i++) {
 		started[i]=false;
 	};
-	console.log(length);
 	
 	//function to reset the stopwatch to the given time
 	function reset(element){
@@ -126,8 +126,10 @@
 		{
 			var parent=element.parentNode.parentNode.parentNode.childNodes;
 			time=parent[0];
-			updateTime(time);
-			interval[i]=setInterval(updateTime,1000);
+			tosend[i]=time;
+					updateTime(time);
+					interval[i]=setInterval(updateTime,1000);
+					console.log(i);
 			console.log(i+" started");
 			started[i]=true;
 		}
