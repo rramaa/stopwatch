@@ -17,7 +17,7 @@
 <body>
 
 <div id="main">
-	<table id="clock0" class="clocks" border="0">
+	<!--<table id="clock0" class="clocks" border="0">
 		<tr>
 			<td class="time" id="hour">00</td>
 			<td class="colon">:</td>
@@ -39,83 +39,62 @@
 			<td class="colon">:</td>
 			<td class="itime"><input id="isecond" value="0"></td>
 		</tr>
-	</table>
-
-	<table id="clock1" class="clocks" border="0">
-		<tr>
-			<td class="time" id="hour">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="minute">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="second">00</td>
-		</tr>
-		<tr>
-			<td><button onclick="start(this)">Start</button></td>
-			<td></td>
-			<td><button onclick="stop(this)">Stop</button></td>
-			<td></td>
-			<td><button onclick="reset(this)" ondblclick="masterreset(this)">Reset</button></td>
-		</tr>
-		<tr>
-			<td class="itime"><input id="ihour" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="iminute" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="isecond" value="0"></td>
-		</tr>
-	</table>
-
-	<table id="clock3" class="clocks" border="0">
-		<tr>
-			<td class="time" id="hour">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="minute">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="second">00</td>
-		</tr>
-		<tr>
-			<td><button onclick="start(this)">Start</button></td>
-			<td></td>
-			<td><button onclick="stop(this)">Stop</button></td>
-			<td></td>
-			<td><button onclick="reset(this)" ondblclick="masterreset(this)">Reset</button></td>
-		</tr>
-		<tr>
-			<td class="itime"><input id="ihour" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="iminute" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="isecond" value="0"></td>
-		</tr>
-	</table>
-
-	<table id="clock4" class="clocks" border="0">
-		<tr>
-			<td class="time" id="hour">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="minute">00</td>
-			<td class="colon">:</td>
-			<td class="time" id="second">00</td>
-		</tr>
-		<tr>
-			<td><button onclick="start(this)">Start</button></td>
-			<td></td>
-			<td><button onclick="stop(this)">Stop</button></td>
-			<td></td>
-			<td><button onclick="reset(this)" ondblclick="masterreset(this)">Reset</button></td>
-		</tr>
-		<tr>
-			<td class="itime"><input id="ihour" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="iminute" value="0"></td>
-			<td class="colon">:</td>
-			<td class="itime"><input id="isecond" value="0"></td>
-		</tr>
-	</table>
-
+	</table>-->
+	<button onclick="create()">Create New Stopwatch</button>
 </div>
+
 <script type="text/javascript">
-	var length=document.getElementsByTagName('table').length;
+	var Count=0;
+	watches=new Array();
+	var Stopwatch=function(h,m,s){
+		this.hour=h;
+		this.minute=m;
+		this.second=s;
+		Count++;
+		console.log(h,m,s,Count);
+	}
+	function create()
+	{
+		watches[Count]=new Stopwatch(20,30,50);
+		var table=document.createElement("table");
+		var row=document.createElement("tr");
+		var div=document.getElementById("main");
+		table.appendChild(row);
+		div.appendChild(table);
+		console.log(table,row);
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	/*var length=document.getElementsByTagName('table').length;
 	var interval=new Array(length);
 	var started=new Array(length);
 	var tosend=new Array(length);
@@ -202,7 +181,7 @@
 	{
 		var i=parseInt(element.parentNode.parentNode.parentNode.parentNode.getAttribute('id').substring(5));
 		if(!started[i])
-		{
+		{*/
 			/*for(var k=0;k<length;k++)
 			{
 				if(started[k] && k!=i)
@@ -213,7 +192,7 @@
 					but.click();
 				}
 			}*/
-			var parent=element.parentNode.parentNode.parentNode.childNodes;
+			/*var parent=element.parentNode.parentNode.parentNode.childNodes;
 			time=parent[0];
 					updateTime(time);
 					interval[i]=setInterval(updateTime,1000,time);
@@ -251,7 +230,7 @@
 			time.childNodes[i].innerHTML="00";
 			inputs.childNodes[i].childNodes[0].value=0;
 		}
-	}
+	}*/
 </script>
 </body>
 </html>
