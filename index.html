@@ -43,6 +43,7 @@
 </div>
 <script type="text/javascript">
 	var interval;
+	var started=false;
 	//function to reset the stopwatch to the given time
 	function reset(){
 		var h=parseInt(document.getElementById('ihour').value);
@@ -83,7 +84,11 @@
 	//function to start the stopwatch
 	function start()
 	{
-		interval=setInterval(updateTime,1000);
+		if(!started)
+		{
+			interval=setInterval(updateTime,1000);
+			started=true;
+		}
 	}
 
 	//function to update the time
@@ -130,7 +135,7 @@
 		h.value=hh.innerHTML;
 		m.value=mm.innerHTML;
 		s.value=ss.innerHTML;
-
+		started=false;
 	}
 </script>
 </body>
