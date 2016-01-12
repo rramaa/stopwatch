@@ -3,7 +3,81 @@
 <head>
 	<title>Stopwatch</title>
 </head>
+<style type="text/css">
+	#main{
+		margin-left: 43%;
+	}
+	table{
+		border: 1px solid black;
+	}
+	.itime input{
+		width: 20px;
+	}
+</style>
 <body>
 
+<div id="main">
+	<table id="clock" border="0">
+		<tr>
+			<td class="time" id="hour">00</td>
+			<td class="colon">:</td>
+			<td class="time" id="minute">00</td>
+			<td class="colon">:</td>
+			<td class="time" id="second">00</td>
+		</tr>
+		<tr>
+			<td><button onclick="start()">Start</button></td>
+			<td></td>
+			<td><button onclick="stop()">Stop</button></td>
+			<td></td>
+			<td><button onclick="reset()">Reset</button></td>
+		</tr>
+		<tr>
+			<td class="itime"><input id="ihour" value="0"></td>
+			<td class="colon">:</td>
+			<td class="itime"><input id="iminute" value="0"></td>
+			<td class="colon">:</td>
+			<td class="itime"><input id="isecond" value="0"></td>
+		</tr>
+	</table>
+</div>
+<script type="text/javascript">
+	//function to reset the stopwatch to the given time
+	function reset(){
+		var h=parseInt(document.getElementById('ihour').value);
+		var m=parseInt(document.getElementById('iminute').value);
+		var s=parseInt(document.getElementById('isecond').value);
+		if((!h && h!=0) || (!m && m!=0) || (!s && s!=0))
+		{	
+			alert("Invalid Inputs");
+			return 0;
+		}
+
+		var hh=document.getElementById('hour');
+		var mm=document.getElementById('minute');
+		var ss=document.getElementById('second');
+		
+		t=parseInt(s/60);
+		m+=t;
+		s%=60;
+		
+		t=parseInt(m/60);
+		h+=t;
+		m%=60;
+
+		h%=100;
+
+
+		if(h<10)
+			h=0+String(h);
+		if(m<10)
+			m=0+String(m);
+		if(s<10)
+			s=0+String(s);
+		hh.innerHTML=h;
+		mm.innerHTML=m;
+		ss.innerHTML=s;
+	}
+</script>
 </body>
 </html>
