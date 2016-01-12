@@ -42,6 +42,7 @@
 	</table>
 </div>
 <script type="text/javascript">
+	var interval;
 	//function to reset the stopwatch to the given time
 	function reset(){
 		var h=parseInt(document.getElementById('ihour').value);
@@ -77,6 +78,59 @@
 		hh.innerHTML=h;
 		mm.innerHTML=m;
 		ss.innerHTML=s;
+	}
+
+	//function to start the stopwatch
+	function start()
+	{
+		interval=setInterval(updateTime,1000);
+	}
+
+	//function to update the time
+	function updateTime()
+	{
+		var hh=document.getElementById('hour');
+		var mm=document.getElementById('minute');
+		var ss=document.getElementById('second');
+		var h=parseInt(hh.innerHTML);
+		var m=parseInt(mm.innerHTML);
+		var s=parseInt(ss.innerHTML)+1;
+
+		t=parseInt(s/60);
+		m+=t;
+		s%=60;
+		
+		t=parseInt(m/60);
+		h+=t;
+		m%=60;
+
+		h%=100;
+
+
+		if(h<10)
+			h=0+String(h);
+		if(m<10)
+			m=0+String(m);
+		if(s<10)
+			s=0+String(s);
+		hh.innerHTML=h;
+		mm.innerHTML=m;
+		ss.innerHTML=s;
+	}
+
+	//function to stop the stopwatch
+	function stop(){
+		clearInterval(interval);
+		var hh=document.getElementById('hour');
+		var mm=document.getElementById('minute');
+		var ss=document.getElementById('second');
+		var h=document.getElementById('ihour');
+		var m=document.getElementById('iminute');
+		var s=document.getElementById('isecond');
+		h.value=hh.innerHTML;
+		m.value=mm.innerHTML;
+		s.value=ss.innerHTML;
+
 	}
 </script>
 </body>
