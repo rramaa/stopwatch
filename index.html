@@ -46,22 +46,132 @@
 <script type="text/javascript">
 	var Count=0;
 	watches=new Array();
-	var Stopwatch=function(h,m,s){
+	var Stopwatch=function(h,m,s,n){
 		this.hour=h;
 		this.minute=m;
 		this.second=s;
+		this.n=Count;
+		this.started=false;
+		this.interval;
+		console.log("Stopwatch created "+this.n+this.hour+this.minute+this.second);
 		Count++;
-		console.log(h,m,s,Count);
+		var table=document.createElement("table");
+		//first row
+		var row=document.createElement("tr");
+		//this.hourData=document.createElement("td");
+		//this.hourData.innerHTML=convert(this.hour);
+		//row.appendChild(this.hourData);
+		var data=document.createElement("td");
+		data.innerHTML=convert(this.hour);
+		data.setAttribute("id",this.n+"hour");
+		row.appendChild(data);
+		var data=document.createElement("td");
+		data.innerHTML=":";
+		row.appendChild(data);
+		var data=document.createElement("td");
+		data.innerHTML=convert(this.minute);
+		data.setAttribute("id",this.n+"minute");
+		row.appendChild(data);
+		var data=document.createElement("td");
+		data.innerHTML=":";
+		row.appendChild(data);
+		var data=document.createElement("td");
+		data.innerHTML=convert(this.second);
+		data.setAttribute("id",this.n+"second");
+		row.appendChild(data);
+		table.appendChild(row);
+		//second row
+		var row=document.createElement("tr");
+		var data=document.createElement("td");
+		this.startButton=document.createElement("button");
+		this.startButton.innerHTML="Start";
+		data.appendChild(this.startButton);
+		row.appendChild(data);
+		var data=document.createElement("td");
+		row.appendChild(data);
+		var data=document.createElement("td");
+		this.stopButton=document.createElement("button");
+		this.stopButton.innerHTML="Stop";
+		data.appendChild(this.stopButton);
+		row.appendChild(data);
+		var data=document.createElement("td");
+		row.appendChild(data);
+		var data=document.createElement("td");
+		this.resetButton=document.createElement("button");
+		this.resetButton.innerHTML="Reset";
+		data.appendChild(this.resetButton);
+		row.appendChild(data);
+		table.appendChild(row);
+		var div=document.getElementById("main");
+		div.appendChild(table);
+		console.log(div);
+		console.log(h,m,s,n);
+	}
+	Stopwatch.prototype.start=function(){
+		if(!this.started){
+			var watch=this;
+			//watch.updateTime();
+			this.interval=setInterval(function(){console.log(watch.updateTime());},1000);
+			this.started=true;
+			//console.log(watch);
+			console.log("Stopwatch started");
+		}
+	};
+	Stopwatch.prototype.updateTime=function(){
+		//console.log(this)
+		this.second+=1;
+		this.minute=this.minute+parseInt(this.second/60);
+		this.hour=this.hour+parseInt(this.minute/60);
+		this.second%=60;
+		this.minute%=60;
+		this.hour%=100;
+		document.getElementById(this.n+"hour").innerHTML=this.hour;
+		document.getElementById(this.n+"minute").innerHTML=this.minute;
+		document.getElementById(this.n+"second").innerHTML=this.second;
+		console.log(this.hour+":"+this.minute+":"+this.second);
+	};
+	Stopwatch.prototype.stop=function(){
+			clearInterval(this.interval);
+			this.started=false;
+			console.log("Stopwatch stopped");
+	};
+	Stopwatch.prototype.reset=function(){
+		this.stop();
+		this.hour=0;
+		this.minute=0;
+		this.second=0;
+		document.getElementById(this.n+"hour").innerHTML=this.hour;
+		document.getElementById(this.n+"minute").innerHTML=this.minute;
+		document.getElementById(this.n+"second").innerHTML=this.second;
+		console.log("Stopwatch reset");
+	}
+	Stopwatch.prototype.assignButtons=function(){
+		var watch=this;
+		this.startButton.addEventListener('click',function(){
+			watch.start();
+		},false);
+		this.stopButton.addEventListener('click',function(){
+			watch.stop();
+		},false);
+		this.resetButton.addEventListener('click',function(){
+			watch.reset();
+		},false);
+	}
+	function convert(data)
+	{
+		//console.log(data);
+		//if(data<10)
+		//	return 0+toString(data);
+		//else
+		//	return toString(data);
+		return data;
 	}
 	function create()
 	{
-		watches[Count]=new Stopwatch(20,30,50);
-		var table=document.createElement("table");
-		var row=document.createElement("tr");
-		var div=document.getElementById("main");
-		table.appendChild(row);
-		div.appendChild(table);
-		console.log(table,row);
+		watches[Count]=new Stopwatch(0,0,0,Count);
+		console.log(watches[Count-1]);
+		watches[Count-1].assignButtons();
+		
 	}
 
 </script>
