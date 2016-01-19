@@ -55,9 +55,12 @@
 		this.interval;
 		console.log("Stopwatch created "+this.n+this.hour+this.minute+this.second);
 		Count++;
+		var frag=document.createDocumentFragment();
 		var table=document.createElement("table");
+		frag.appendChild(table);
 		//first row
 		var row=document.createElement("tr");
+		// createfragments
 		//this.hourData=document.createElement("td");
 		//this.hourData.innerHTML=convert(this.hour);
 		//row.appendChild(this.hourData);
@@ -103,14 +106,26 @@
 		row.appendChild(data);
 		table.appendChild(row);
 		var div=document.getElementById("main");
-		div.appendChild(table);
-		console.log(div);
+		div.appendChild(frag);
+		console.log(frag);
 		console.log(h,m,s,n);
 	}
+
+	// rama.abc(){
+	// 	this== rama
+	// }
+	// abc(){
+	// 	this==window
+	// }
+
 	Stopwatch.prototype.start=function(){
 		if(!this.started){
 			var watch=this;
 			//watch.updateTime();
+			// event loop
+			//closure
+			//scope
+
 			this.interval=setInterval(function(){console.log(watch.updateTime());},1000);
 			this.started=true;
 			//console.log(watch);
